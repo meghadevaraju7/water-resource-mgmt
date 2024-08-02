@@ -1,0 +1,190 @@
+{
+    "request": {
+        "headers": {
+            "accept": "image/tiff",
+            "content-type": "application/json"
+        },
+        "payload": {
+            "evalscript": "\n//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"B03\",\"B08\", \"SCL\", \"dataMask\"],\n    output: { bands: 3, sampleType: \"FLOAT32\"}\n  };\n}\n\nfunction isValid(samples){\n  var scl = samples.SCL;\n\n  if (scl === 3) { // SC_CLOUD_SHADOW\n    return false;\n  } else if (scl === 9) { // SC_CLOUD_HIGH_PROBA\n    return false;\n  } else if (scl === 8) { // SC_CLOUD_MEDIUM_PROBA\n    return false;\n  } else if (scl === 7) { // SC_CLOUD_LOW_PROBA / UNCLASSIFIED\n    // return false;\n  } else if (scl === 10) { // SC_THIN_CIRRUS\n    return false;\n  } else if (scl === 11) { // SC_SNOW_ICE\n    return false;\n  } else if (scl === 1) { // SC_SATURATED_DEFECTIVE\n    return false;\n  } else if (scl === 2) { // SC_DARK_FEATURE_SHADOW\n    // return false;\n  }\n  return true;\n}\n\nfunction evaluatePixel(samples) {\n  let index = (samples.B03-samples.B08)/(samples.B03+samples.B08);\n  let waterMask = 0\n  if (isValid(samples) & index > 0.15) {\n    waterMask = 1;\n  }\n\n  return [index,waterMask,samples.dataMask];\n}\n",
+            "input": {
+                "bounds": {
+                    "geometry": {
+                        "coordinates": [
+                            [
+                                [
+                                    403245.0349085098,
+                                    1591225.0258997208
+                                ],
+                                [
+                                    403241.21107795206,
+                                    1591242.22122917
+                                ],
+                                [
+                                    403225.03525416105,
+                                    1591255.018843741
+                                ],
+                                [
+                                    403225.03525415994,
+                                    1591274.9811562581
+                                ],
+                                [
+                                    403231.8931132788,
+                                    1591284.1230524676
+                                ],
+                                [
+                                    403225.03448665456,
+                                    1591314.965513345
+                                ],
+                                [
+                                    403262.52499109745,
+                                    1591318.7162758887
+                                ],
+                                [
+                                    403275.0167232463,
+                                    1591324.964641666
+                                ],
+                                [
+                                    403295.67332475714,
+                                    1591324.9649397028
+                                ],
+                                [
+                                    403295.7364586639,
+                                    1591325.0000000005
+                                ],
+                                [
+                                    403314.7252741199,
+                                    1591324.9652145877
+                                ],
+                                [
+                                    403324.9686062911,
+                                    1591324.9653623796
+                                ],
+                                [
+                                    403324.969498756,
+                                    1591324.9635783406
+                                ],
+                                [
+                                    403324.9811577644,
+                                    1591324.9647447735
+                                ],
+                                [
+                                    403334.96474477364,
+                                    1591314.9811577636
+                                ],
+                                [
+                                    403334.8721116729,
+                                    1591305.168244312
+                                ],
+                                [
+                                    403334.964641666,
+                                    1591304.983276754
+                                ],
+                                [
+                                    403335.13053123787,
+                                    1591262.516960569
+                                ],
+                                [
+                                    403344.96464072034,
+                                    1591244.983275788
+                                ],
+                                [
+                                    403344.96536132164,
+                                    1591215.0350964996
+                                ],
+                                [
+                                    403344.96551428066,
+                                    1591215.0344857194
+                                ],
+                                [
+                                    403344.9653613382,
+                                    1591215.0344419896
+                                ],
+                                [
+                                    403344.9653614103,
+                                    1591215.0313975802
+                                ],
+                                [
+                                    403344.96536238014,
+                                    1591215.0313937087
+                                ],
+                                [
+                                    403344.96535644366,
+                                    1591215.0313920113
+                                ],
+                                [
+                                    403294.98327047506,
+                                    1591195.0353590187
+                                ],
+                                [
+                                    403275.0188474704,
+                                    1591195.035255226
+                                ],
+                                [
+                                    403275.0188437407,
+                                    1591195.0352541604
+                                ],
+                                [
+                                    403275.018843059,
+                                    1591195.0352552263
+                                ],
+                                [
+                                    403275.018842236,
+                                    1591195.035255226
+                                ],
+                                [
+                                    403245.0349085098,
+                                    1591225.0258997208
+                                ]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": {
+                        "crs": "http://www.opengis.net/def/crs/EPSG/0/32644"
+                    }
+                },
+                "data": [
+                    {
+                        "dataFilter": {
+                            "mosaickingOrder": "leastCC",
+                            "timeRange": {
+                                "from": "2024-04-20T00:00:00Z",
+                                "to": "2024-04-30T00:00:00Z"
+                            }
+                        },
+                        "type": "sentinel-2-l2a"
+                    }
+                ]
+            },
+            "output": {
+                "responses": [
+                    {
+                        "format": {
+                            "type": "image/tiff"
+                        },
+                        "identifier": "default"
+                    }
+                ],
+                "resx": 10,
+                "resy": 10
+            }
+        },
+        "timestamp": "2024-08-02T11:34:31.484148",
+        "url": "https://sh.dataspace.copernicus.eu/api/v1/process"
+    },
+    "response": {
+        "elapsed": 0.436507,
+        "headers": {
+            "access-control-allow-credentials": "true",
+            "access-control-allow-headers": "origin,content-type,accept,accept-crs,authorization,cache-control",
+            "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH",
+            "access-control-allow-origin": "*",
+            "access-control-max-age": "3600",
+            "content-length": "1069",
+            "content-type": "image/tiff",
+            "date": "Fri, 02 Aug 2024 09:34:30 GMT",
+            "x-processingunits-spent": "0.02"
+        },
+        "status_code": 200
+    }
+}
