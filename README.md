@@ -8,7 +8,7 @@ The optical satellite imagery is obtained from the [Copernicus Data Space Ecosys
 
 ### How to run the notebook
 
-The repository includes a `reqirements.txt`. Please make sure that the dependencies have been installed by running the following in the terminal.
+The repository includes a `requirements.txt`. Please make sure that the dependencies have been installed by running the following in the terminal.
 
 ```console
 $pip install -r /path/to/requirements.txt
