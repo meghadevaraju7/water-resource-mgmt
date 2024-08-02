@@ -1,17 +1,17 @@
 # Water Classification and Quantification
 
-##### A jypyter notebook to download Sentinel-2 L2A imagery over the AOI and analyse presense of water
+##### A jupyter notebook to download Sentinel-2 L2A imagery over the AOI and analyze presense of water
  
-This repository contains a Jupyter notebook with a main objective to classify whether the provided AOIs contain water using satellite optical imagery, and if they do, to quantify the area occupied by water. In the end, a CSV file is to be generated summarizing this analysis.
+This repository contains a Jupyter notebook with the main objective to classify whether the provided AOIs contain water using satellite optical imagery, and if they do, to quantify the area occupied by water. In the end, a CSV file is to be generated summarizing this analysis.
 
 The optical satellite imagery is obtained from the [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu) and the tools used for the project are QGIS (to covert the CSV file to GeoJSON) and [Processing API](https://documentation.dataspace.copernicus.eu/APIs/SentinelHub/Process.html) which is part of the suite of APIs provided by the Copernicus Data Space Ecosystem. Using the Green band (B03) and NIR band (B08) of Sentinel-2 L2A, the Normalised Difference Water Index (NDWI) index is used to identify the water pixels, create a binary mask (`waterMask`) over the AOIs, and then calculate the total area covered by water using the `waterMask` and the spatial resolution of each pixel.
 
 ### How to run the notebook
 
-The repository includes a `reqirements.txt`. Please make sure that the dependencies have been installed by running the following.
+The repository includes a `reqirements.txt`. Please make sure that the dependencies have been installed by running the following in the terminal.
 
 ```console
-pip install -r /path/to/requirements.txt
+$pip install -r /path/to/requirements.txt
 ```
 To use the tools of the Copernicus Dataspace Ecosystem, you would also need an account on this platform, which can be created for free [here](https://identity.dataspace.copernicus.eu/auth/realms/CDSE/login-actions/registration?client_id=cdse-public&tab_id=TgNoebMYzZ4). The Sentinel Hub APIs use OAuth Clients to let users access the data and services. This can be obtained by following the steps below:
 
