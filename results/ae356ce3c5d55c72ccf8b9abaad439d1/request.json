@@ -1,0 +1,154 @@
+{
+    "request": {
+        "headers": {
+            "accept": "image/tiff",
+            "content-type": "application/json"
+        },
+        "payload": {
+            "evalscript": "\n//VERSION=3\n\nfunction setup() {\n  return {\n    input: [\"B03\",\"B08\", \"SCL\", \"dataMask\"],\n    output: { bands: 3, sampleType: \"FLOAT32\"}\n  };\n}\n\nfunction isValid(samples){\n  var scl = samples.SCL;\n\n  if (scl === 3) { // SC_CLOUD_SHADOW\n    return false;\n  } else if (scl === 9) { // SC_CLOUD_HIGH_PROBA\n    return false;\n  } else if (scl === 8) { // SC_CLOUD_MEDIUM_PROBA\n    return false;\n  } else if (scl === 7) { // SC_CLOUD_LOW_PROBA / UNCLASSIFIED\n    // return false;\n  } else if (scl === 10) { // SC_THIN_CIRRUS\n    return false;\n  } else if (scl === 11) { // SC_SNOW_ICE\n    return false;\n  } else if (scl === 1) { // SC_SATURATED_DEFECTIVE\n    return false;\n  } else if (scl === 2) { // SC_DARK_FEATURE_SHADOW\n    // return false;\n  }\n  return true;\n}\n\nfunction evaluatePixel(samples) {\n  let index = (samples.B03-samples.B08)/(samples.B03+samples.B08);\n  let waterMask = 0\n  if (isValid(samples) & index > 0.15) {\n    waterMask = 1;\n  }\n\n  return [index,waterMask,samples.dataMask];\n}\n",
+            "input": {
+                "bounds": {
+                    "geometry": {
+                        "coordinates": [
+                            [
+                                [
+                                    465364.8795404746,
+                                    1758093.4288236767
+                                ],
+                                [
+                                    465365.03447085794,
+                                    1758093.6731823282
+                                ],
+                                [
+                                    465365.1651409607,
+                                    1758093.9313293765
+                                ],
+                                [
+                                    465365.2703353388,
+                                    1758094.2008636356
+                                ],
+                                [
+                                    465365.3490755156,
+                                    1758094.479278002
+                                ],
+                                [
+                                    465365.40062907647,
+                                    1758094.7639827682
+                                ],
+                                [
+                                    465367.80110938847,
+                                    1758112.9980961385
+                                ],
+                                [
+                                    465385.48594681284,
+                                    1758121.8449334402
+                                ],
+                                [
+                                    465441.9654031252,
+                                    1758112.4244719332
+                                ],
+                                [
+                                    465441.9646813923,
+                                    1758095.92495243
+                                ],
+                                [
+                                    465429.0917405494,
+                                    1758076.6115208617
+                                ],
+                                [
+                                    465431.9648418394,
+                                    1758073.7384195714
+                                ],
+                                [
+                                    465431.96528906067,
+                                    1758067.949613507
+                                ],
+                                [
+                                    465421.77065182856,
+                                    1758067.6570238182
+                                ],
+                                [
+                                    465407.80389827763,
+                                    1758065.909880789
+                                ],
+                                [
+                                    465394.1786951014,
+                                    1758058.0353442773
+                                ],
+                                [
+                                    465348.03448571987,
+                                    1758058.0345381296
+                                ],
+                                [
+                                    465348.0344857193,
+                                    1758072.011993287
+                                ],
+                                [
+                                    465348.17045032606,
+                                    1758072.0141163617
+                                ],
+                                [
+                                    465348.18616160617,
+                                    1758073.9775705019
+                                ],
+                                [
+                                    465364.7017909153,
+                                    1758093.2005263527
+                                ],
+                                [
+                                    465364.8795404746,
+                                    1758093.4288236767
+                                ]
+                            ]
+                        ],
+                        "type": "Polygon"
+                    },
+                    "properties": {
+                        "crs": "http://www.opengis.net/def/crs/EPSG/0/32644"
+                    }
+                },
+                "data": [
+                    {
+                        "dataFilter": {
+                            "mosaickingOrder": "leastCC",
+                            "timeRange": {
+                                "from": "2024-04-20T00:00:00Z",
+                                "to": "2024-04-30T00:00:00Z"
+                            }
+                        },
+                        "type": "sentinel-2-l2a"
+                    }
+                ]
+            },
+            "output": {
+                "responses": [
+                    {
+                        "format": {
+                            "type": "image/tiff"
+                        },
+                        "identifier": "default"
+                    }
+                ],
+                "resx": 10,
+                "resy": 10
+            }
+        },
+        "timestamp": "2024-08-02T18:51:50.036389",
+        "url": "https://sh.dataspace.copernicus.eu/api/v1/process"
+    },
+    "response": {
+        "elapsed": 0.351633,
+        "headers": {
+            "access-control-allow-credentials": "true",
+            "access-control-allow-headers": "origin,content-type,accept,accept-crs,authorization,cache-control",
+            "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH",
+            "access-control-allow-origin": "*",
+            "access-control-max-age": "3600",
+            "content-length": "693",
+            "content-type": "image/tiff",
+            "date": "Fri, 02 Aug 2024 16:51:49 GMT",
+            "x-processingunits-spent": "0.02"
+        },
+        "status_code": 200
+    }
+}
